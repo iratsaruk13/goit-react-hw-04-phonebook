@@ -20,7 +20,7 @@ export const ContactsButton = styled.button`
   color: #300339;
   background-color: #e1bbe3;
   margin: 0 auto;
-  width: 100%;
+  width: 100px;
   border-radius: 10px;
   border: none;
   padding: 16px;

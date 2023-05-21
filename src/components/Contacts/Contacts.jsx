@@ -7,6 +7,8 @@ import {
   ContactsButton,
 } from "./Contacts.styled";
 
+import { BsTrash3 } from "react-icons/bs";
+
 export const Contacts = ({ options, removeContact }) => {
   return (
     <>
@@ -18,7 +20,7 @@ export const Contacts = ({ options, removeContact }) => {
                 {name}: {number}
               </ContactsName>
               <ContactsButton type="button" onClick={() => removeContact(id)}>
-                Delete
+                 <BsTrash3 />
               </ContactsButton>
             </ContactsItem>
           );
