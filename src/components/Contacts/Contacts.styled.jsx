@@ -1,20 +1,20 @@
 import styled from "styled-components";
 
-const ContactsList = styled.ul`
+export const ContactsList = styled.ul`
   display: flex;
   flex-direction: column;
 `;
 
-const ContactsItem = styled.li`
+export const ContactsItem = styled.li`
   display: flex;
   align-items: center;
 `;
-const ContactsName = styled.p`
+export const ContactsName = styled.p`
   color: #300339;
   font-size: 18px;
 `;
 
-const ContactsButton = styled.button`
+export const ContactsButton = styled.button`
   font-size: 20px;
   font-weight: 500;
   color: #300339;
@@ -30,4 +30,3 @@ const ContactsButton = styled.button`
   }
 `;
 
-export { ContactsList, ContactsItem, ContactsName, ContactsButton };

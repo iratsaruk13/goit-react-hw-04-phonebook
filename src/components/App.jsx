@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import { Container, MainTitle, ContactsTitle, Message } from "./App.styled";
 import { FormContact } from "./FormContact/FormContact";
@@ -9,32 +9,31 @@ import initialContacts from "./contacts.json"
 
 const CONTACTS_KEY = 'contacts';
 
-export class App extends Component {
-  state = {
-    contacts: initialContacts,
-    filter: "",
+export const App = () => {
+const [contacts, setContacts] = useState(
+  () => JSON.parse(localStorage.getItem(CONTACTS_KEY)) ?? initialContacts 
+);
+const [filter, setFilter] = useState('')
+ 
+useEffect(() => {
+  localStorage.setItem(CONTACTS_KEY, JSON.stringify(contacts))
+}, [contacts])
+
+
+  const normalizedNumber = number => {
+    let normalizedNumber = number.substring(0, 3) + '-';
+    for (let i = 3; i < number.length; i += 1) {
+      if ((i - 3) % 2 === 0 && i !== 3) {
+        normalizedNumber += '-';
+      }
+      normalizedNumber += number[i];
+    }
+    return normalizedNumber;
   };
 
-  componentDidMount() {
-    const contacts = localStorage.getItem(CONTACTS_KEY);
-    const parsedContacts = JSON.parse(contacts);
-
-    if(parsedContacts) {
-      this.setState({contacts: parsedContacts})
-    }
-    
-
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.contacts !== prevState.contacts) {
-      localStorage.setItem(CONTACTS_KEY, JSON.stringify(this.state.contacts))
-    }
-  }
-
-  addContact = (name, number) => {
-    const normalizedNumber = this.normalizedNumber(number);
-    const checkName = this.state.contacts.some(
+ const addContact = (name, number) => {
+    const normalizedNumber = normalizedNumber(number);
+    const checkName = contacts.some(
       (el) => el.name.toLowerCase() === name.toLowerCase()
     );
     if (checkName) {
@@ -47,63 +46,50 @@ export class App extends Component {
       number: normalizedNumber,
     };
 
-    this.setState((prevState) => ({
-      contacts: [...prevState.contacts, contact],
-    }));
+    setContacts(prevContacts => [...prevContacts, contact])
+  
   };
 
-  normalizedNumber = number => {
-    let normalizedNumber = number.substring(0, 3) + '-';
-    for (let i = 3; i < number.length; i += 1) {
-      if ((i - 3) % 2 === 0 && i !== 3) {
-        normalizedNumber += '-';
-      }
-      normalizedNumber += number[i];
-    }
-    return normalizedNumber;
+ 
+
+  const onChangeFilter = (evt) => {
+    setFilter(evt.currentTarget.value);
   };
 
-  onChangeFilter = (evt) => {
-    this.setState({ filter: evt.currentTarget.value });
-  };
-
-  getContacts = () => {
-    const { contacts, filter } = this.state;
+  const getContacts = () => {
+    const normalized = filter.toLowerCase();
     return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
+      contact.name.toLowerCase().includes(normalized)
     );
   };
 
-  removeContact = (id) => {
-    this.setState((prevState) => ({
-      contacts: prevState.contacts.filter((el) => el.id !== id),
-    }));
+  const removeContact = id => {
+    setContacts(prevContacts => prevContacts.filter(contact => contact.id !== id));
   };
 
+const filteredContacts = getContacts()
 
-
-  render() {
-    const { contacts } = this.state;
-    const filteredContacts = this.getContacts();
+ 
     return (
       <Container>
         <MainTitle>Phonebook</MainTitle>
-        <FormContact addContact={this.addContact} />
+        <FormContact addContact={addContact} />
 
         <ContactsTitle>Contacts</ContactsTitle>
         <FormFilter
           label="Find contacts by name"
-          onChange={this.onChangeFilter}
+          onChange={onChangeFilter}
         />
         {contacts.length === 0 ? (
           <Message>You don't have contacts yet</Message>
         ) : (
           <Contacts
             options={filteredContacts}
-            removeContact={this.removeContact}
+            removeContact={removeContact}
           />
         )}
       </Container>
     );
-  }
-}
+        }
+  
+

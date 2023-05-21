@@ -15,12 +15,16 @@ const initialValues = {
   number: "",
 };
 
+const phoneValidation =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
 const schema = Yup.object({
   name: Yup.string().required("The field Name is required"),
   number: Yup.string()
     .required("The field Number is required")
     .min(7, "The number must be at least 7 digits long")
-    .max(14, "The number can consist of maximum 14 digits"),
+    .max(14, "The number can consist of maximum 14 digits")
+    .matches(phoneValidation, "The number must consist of digits"),
 });
 
 export const FormContact = ({ addContact }) => {

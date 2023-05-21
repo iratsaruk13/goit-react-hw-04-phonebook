@@ -1,24 +1,24 @@
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 
-const StyledFormik = styled(Formik)`
+export const StyledFormik = styled(Formik)`
   display: flex;
 `;
 
-const StyledForm = styled(Form)`
+export const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
 `;
 
-const FilterLabel = styled.label`
+export const FilterLabel = styled.label`
   display: block;
   margin-right: auto;
   font-size: 18px;
   color: #300339;
 `;
 
-const FilterInput = styled(Field)`
+export const FilterInput = styled(Field)`
   font-size: 16px;
   color: #300339;
   border-radius: 15px;
@@ -46,4 +46,3 @@ const FilterInput = styled(Field)`
   }
 `;
 
-export { StyledFormik, StyledForm, FilterLabel, FilterInput };
