@@ -1,11 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  StyledFormik,
-  StyledForm,
-  FilterLabel,
-  FilterInput,
-} from "./Filter.styled";
+import { StyledForm, FilterLabel, FilterInput } from "./Filter.styled";
 
 export const FormFilter = ({ label, onChange }) => {
   const initialValues = {
@@ -13,18 +8,16 @@ export const FormFilter = ({ label, onChange }) => {
   };
 
   return (
-    <StyledFormik initialValues={initialValues}>
-      <StyledForm>
-        <FilterLabel htmlFor="filter">{label}</FilterLabel>
-        <FilterInput
-          type="text"
-          id="filter"
-          name="filter"
-          onChange={onChange}
-          value={onChange.filter}
-        />
-      </StyledForm>
-    </StyledFormik>
+    <StyledForm initialValues={initialValues}>
+      <FilterLabel htmlFor="filter">{label}</FilterLabel>
+      <FilterInput
+        type="text"
+        id="filter"
+        name="filter"
+        onChange={onChange}
+        value={onChange.filter}
+      />
+    </StyledForm>
   );
 };
 

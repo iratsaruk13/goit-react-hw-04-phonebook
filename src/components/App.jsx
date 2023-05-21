@@ -6,30 +6,30 @@ import { Contacts } from "./Contacts/Contacts";
 import { FormFilter } from "./Filter/Filter";
 import initialContacts from "./contacts.json";
 
-const CONTACTS_KEY = 'contacts';
+const CONTACTS_KEY = "contacts";
 
 export const App = () => {
-const [contacts, setContacts] = useState(
-  () => JSON.parse(localStorage.getItem(CONTACTS_KEY)) ?? initialContacts 
-);
-const [filter, setFilter] = useState('')
- 
-useEffect(() => {
-  localStorage.setItem(CONTACTS_KEY, JSON.stringify(contacts))
-}, [contacts])
+  const [contacts, setContacts] = useState(
+    () => JSON.parse(localStorage.getItem(CONTACTS_KEY)) ?? initialContacts
+  );
+  const [filter, setFilter] = useState("");
 
-const normalizedNumber = number => {
-  let normalizedNumber = number.substring(0, 3) + '-';
-  for (let i = 3; i < number.length; i += 1) {
-    if ((i - 3) % 2 === 0 && i !== 3) {
-      normalizedNumber += '-';
+  useEffect(() => {
+    localStorage.setItem(CONTACTS_KEY, JSON.stringify(contacts));
+  }, [contacts]);
+
+  const normalizedNumber = (number) => {
+    let normalizedNumber = number.substring(0, 3) + "-";
+    for (let i = 3; i < number.length; i += 1) {
+      if ((i - 3) % 2 === 0 && i !== 3) {
+        normalizedNumber += "-";
+      }
+      normalizedNumber += number[i];
     }
-    normalizedNumber += number[i];
-  }
-  return normalizedNumber;
-};
+    return normalizedNumber;
+  };
 
- const addContact = (name, number) => {
+  const addContact = (name, number) => {
     const formattedNumber = normalizedNumber(number);
     const checkName = contacts.some(
       (el) => el.name.toLowerCase() === name.toLowerCase()
@@ -44,11 +44,8 @@ const normalizedNumber = number => {
       number: formattedNumber,
     };
 
-    setContacts(prevContacts => [...prevContacts, contact])
-  
+    setContacts((prevContacts) => [...prevContacts, contact]);
   };
-
- 
 
   const onChangeFilter = (evt) => {
     setFilter(evt.currentTarget.value);
@@ -61,33 +58,26 @@ const normalizedNumber = number => {
     );
   };
 
-  const removeContact = id => {
-    setContacts(prevContacts => prevContacts.filter(contact => contact.id !== id));
+  const removeContact = (id) => {
+    setContacts((prevContacts) =>
+      prevContacts.filter((contact) => contact.id !== id)
+    );
   };
 
-const filteredContacts = getContacts()
+  const filteredContacts = getContacts();
 
- 
-    return (
-      <Container>
-        <MainTitle>Phonebook</MainTitle>
-        <FormContact addContact={addContact} />
+  return (
+    <Container>
+      <MainTitle>Phonebook</MainTitle>
+      <FormContact addContact={addContact} />
 
-        <ContactsTitle>Contacts</ContactsTitle>
-        <FormFilter
-          label="Find contacts by name"
-          onChange={onChangeFilter}
-        />
-        {contacts.length === 0 ? (
-          <Message>You don't have contacts yet</Message>
-        ) : (
-          <Contacts
-            options={filteredContacts}
-            removeContact={removeContact}
-          />
-        )}
-      </Container>
-    );
-        }
-  
-
+      <ContactsTitle>Contacts</ContactsTitle>
+      <FormFilter label="Find contacts by name" onChange={onChangeFilter} />
+      {contacts.length === 0 ? (
+        <Message>You don't have contacts yet</Message>
+      ) : (
+        <Contacts options={filteredContacts} removeContact={removeContact} />
+      )}
+    </Container>
+  );
+};

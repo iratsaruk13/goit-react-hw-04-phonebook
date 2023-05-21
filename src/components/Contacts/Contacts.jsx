@@ -20,7 +20,7 @@ export const Contacts = ({ options, removeContact }) => {
                 {name}: {number}
               </ContactsName>
               <ContactsButton type="button" onClick={() => removeContact(id)}>
-                 <BsTrash3 />
+                <BsTrash3 />
               </ContactsButton>
             </ContactsItem>
           );

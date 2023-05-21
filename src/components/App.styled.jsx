@@ -24,5 +24,3 @@ export const Message = styled.p`
   font-size: 18px;
   color: #5c057e;
 `;
-
-

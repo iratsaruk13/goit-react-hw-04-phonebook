@@ -29,4 +29,3 @@ export const ContactsButton = styled.button`
     box-shadow: 0 2px 5px rgba(51, 0, 66, 0.2), 0 4px 6px rgba(0, 0, 0, 0.2);
   }
 `;
-
