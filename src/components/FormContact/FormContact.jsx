@@ -28,7 +28,7 @@ export const FormContact = ({ addContact }) => {
   const {
     register,
     handleSubmit,
-    handleReset,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -36,7 +36,7 @@ export const FormContact = ({ addContact }) => {
 
   const onSubmit = (data) => {
     addContact(data.name, data.number);
-    handleReset();
+    reset();
   };
 
   return (
