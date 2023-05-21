@@ -41,7 +41,7 @@ export const FormContact = ({ addContact }) => {
         <StyledForm>
           <div>
             <FormLabel htmlFor="name">Name:</FormLabel>
-            <FormInput type="text" id="name" name="name" />
+            <FormInput type="text" id="name" name="name"  />
             <Error name="name" component="div" />
           </div>
           <div>

@@ -4,8 +4,7 @@ import { Container, MainTitle, ContactsTitle, Message } from "./App.styled";
 import { FormContact } from "./FormContact/FormContact";
 import { Contacts } from "./Contacts/Contacts";
 import { FormFilter } from "./Filter/Filter";
-import initialContacts from "./contacts.json"
-
+import initialContacts from "./contacts.json";
 
 const CONTACTS_KEY = 'contacts';
 
@@ -19,20 +18,19 @@ useEffect(() => {
   localStorage.setItem(CONTACTS_KEY, JSON.stringify(contacts))
 }, [contacts])
 
-
-  const normalizedNumber = number => {
-    let normalizedNumber = number.substring(0, 3) + '-';
-    for (let i = 3; i < number.length; i += 1) {
-      if ((i - 3) % 2 === 0 && i !== 3) {
-        normalizedNumber += '-';
-      }
-      normalizedNumber += number[i];
+const normalizedNumber = number => {
+  let normalizedNumber = number.substring(0, 3) + '-';
+  for (let i = 3; i < number.length; i += 1) {
+    if ((i - 3) % 2 === 0 && i !== 3) {
+      normalizedNumber += '-';
     }
-    return normalizedNumber;
-  };
+    normalizedNumber += number[i];
+  }
+  return normalizedNumber;
+};
 
  const addContact = (name, number) => {
-    const normalizedNumber = normalizedNumber(number);
+    const formattedNumber = normalizedNumber(number);
     const checkName = contacts.some(
       (el) => el.name.toLowerCase() === name.toLowerCase()
     );
@@ -43,7 +41,7 @@ useEffect(() => {
     const contact = {
       id: nanoid(),
       name: name,
-      number: normalizedNumber,
+      number: formattedNumber,
     };
 
     setContacts(prevContacts => [...prevContacts, contact])
